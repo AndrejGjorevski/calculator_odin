@@ -56,6 +56,8 @@ function evaluateExpression(expression) {
     return "Error";
 }
 
+let resultDisplayed = false;
+
 for (let i = 0; i < operationButtons.length; i++) {
     operationButtons[i].addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "lightyellow");
     operationButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "orange");
@@ -68,9 +70,14 @@ for (let i = 0; i < operationButtons.length; i++) {
             displayContent.innerText = "";
         }
 
+        if (resultDisplayed) {
+            resultDisplayed = false;
+        }
+
         if (current === "=") {
             const result = evaluateExpression(display);
             displayContent.innerText = result;
+            resultDisplayed = true;
             return;
         }
 
@@ -98,6 +105,11 @@ for (let i = 0; i < numberButtons.length; i++) {
 
         if (displayContent.innerText === "Error" || displayContent.innerText === "Division by 0") {
             displayContent.innerText = "";
+        }
+
+        if (resultDisplayed) {
+            displayContent.innerText = "";
+            resultDisplayed = false;
         }
 
         if (value === "C") {
