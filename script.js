@@ -5,9 +5,13 @@ for (let i = 0; i < operationButtons.length; i++) {
 }
 
 const numberButtons = document.getElementsByClassName("number");
+const displayContent = document.getElementById("display-content")
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "white");
     numberButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "lightgrey");
+    numberButtons[i].addEventListener("click", (e) => {
+        displayContent.append(e.target.querySelector("p").innerText);
+    })
 }
 
 function add(a, b) {
