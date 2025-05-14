@@ -1,3 +1,9 @@
+const operationButtons = document.getElementsByClassName("operation");
+for (let i = 0; i < operationButtons.length; i++) {
+    operationButtons[i].addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "lightyellow");
+    operationButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "orange");
+}
+
 function add(a, b) {
     return a + b;
 }

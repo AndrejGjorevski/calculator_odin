@@ -48,6 +48,7 @@ body {
     height: 60px;
     background-color: orange;
     color: black;
+    cursor: pointer;
 }
 
 .operation p {
