@@ -10,34 +10,56 @@ function evaluateExpression(expression) {
     let firstNum = "";
     let secondNum = "";
     let operand = "";
-    for (let i = 0; i < expression.length - 1; i++) {
-        if (isNumeric(expression[i]) && operand === "") {
-            firstNum += (expression[i]);
-        } else if (isNumeric(expression[i]) && operand !== "") {
-            secondNum += (expression[i]);
+
+    for (let i = 0; i < expression.length; i++) {
+        if (isNumeric(expression[i])) {
+            if (operand === "") {
+                firstNum += expression[i];
+            } else {
+                secondNum += expression[i];
+            }
+        } else if (!isNumeric(expression[i]) && operand === "") {
+            operand = expression[i];
         } else {
-            operand += (expression[i]);
+            return "Error";
         }
     }
 
-    console.log(Number(firstNum), Number(secondNum), operand)
-    let result = operate(Number(firstNum), Number(secondNum), operand);
-    displayContent.innerText = result;
+    if (firstNum && secondNum && operand) {
+        return operate(Number(firstNum), Number(secondNum), operand);
+    }
+
+    return "Error";
 }
 
 for (let i = 0; i < operationButtons.length; i++) {
     operationButtons[i].addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "lightyellow");
     operationButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "orange");
     operationButtons[i].addEventListener("click", (e) => {
-        const text = displayContent.innerText;
-        const lastChar = text[text.length - 1];
-        if (isNumeric(lastChar)) {
-            displayContent.append(e.currentTarget.querySelector("p").innerText);
+        const current = e.currentTarget.querySelector("p").innerText;
+        const display = displayContent.innerText;
+        const lastChar = display[display.length - 1];
+
+        if (current === "=") {
+            const result = evaluateExpression(display);
+            displayContent.innerText = result;
+            return;
         }
-        if (e.currentTarget.querySelector("p").innerText === "=" && isNumeric(lastChar)) {
-            evaluateExpression(displayContent.innerText)
+
+        if (!isNumeric(lastChar) && !isNumeric(current)) {
+            displayContent.innerText = display.slice(0, -1) + current;
+            return;
         }
-    })
+
+        const hasOperator = /[+\-*/]/.test(display);
+        if (hasOperator && isNumeric(lastChar) && !isNumeric(current)) {
+            const result = evaluateExpression(display);
+            displayContent.innerText = result + current;
+            return;
+        }
+
+        displayContent.innerText += current;
+    });
 }
 
 for (let i = 0; i < numberButtons.length; i++) {
