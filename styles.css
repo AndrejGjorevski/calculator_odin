@@ -52,6 +52,7 @@ body {
     background-color: orange;
     color: black;
     cursor: pointer;
+    user-select: none;
 }
 
 .operation p {
@@ -68,6 +69,7 @@ body {
     background-color: lightgrey;
     color: black;
     cursor: pointer;
+    user-select: none;
 }
 
 .number p {
