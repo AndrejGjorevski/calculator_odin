@@ -10,7 +10,7 @@ function evaluateExpression(expression) {
     let firstNum = "";
     let secondNum = "";
     let operand = "";
-    console.log(expression)
+    let flag = false;
 
     for (let i = 0; i < expression.length; i++) {
         if (isNumeric(expression[i])) {
@@ -21,13 +21,21 @@ function evaluateExpression(expression) {
             }
         } else if (!isNumeric(expression[i]) && operand === "") {
             if (firstNum !== "" && expression[i] === ".") {
-                firstNum += expression[i]
+                if (flag) {
+                    return "Error";
+                }
+                firstNum += expression[i];
+                flag = true;
             } else {
                 operand = expression[i];
             }
         } else if (!isNumeric(expression[i]) && operand !== "") {
             if (secondNum !== "" && expression[i] === ".") {
+                if (flag) {
+                    return "Error";
+                }
                 secondNum += expression[i];
+                flag = true;
             }
         } else {
             return "Error";
@@ -35,7 +43,14 @@ function evaluateExpression(expression) {
     }
 
     if (firstNum && secondNum && operand) {
-        return operate(Number(firstNum), Number(secondNum), operand);
+        let result = operate(Number(firstNum), Number(secondNum), operand);
+        if (Number.isInteger(result)) {
+            return result;
+        } else if (typeof result === "string") {
+            return result;
+        } else {
+            return result.toFixed(1);
+        }
     }
 
     return "Error";
@@ -48,6 +63,10 @@ for (let i = 0; i < operationButtons.length; i++) {
         const current = e.currentTarget.querySelector("p").innerText;
         const display = displayContent.innerText;
         const lastChar = display[display.length - 1];
+        
+        if (display === "Error" || display === "Division by 0") {
+            displayContent.innerText = "";
+        }
 
         if (current === "=") {
             const result = evaluateExpression(display);
@@ -76,6 +95,11 @@ for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "lightgrey");
     numberButtons[i].addEventListener("click", (e) => {
         let value = e.currentTarget.querySelector("p").innerText;
+
+        if (displayContent.innerText === "Error" || displayContent.innerText === "Division by 0") {
+            displayContent.innerText = "";
+        }
+
         if (value === "C") {
             displayContent.innerText = "";
             return;
@@ -97,6 +121,9 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (Number(a) === 0 || Number(b) === 0) {
+        return "Division by 0";
+    }
     return a / b;
 }
 
