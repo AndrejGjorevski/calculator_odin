@@ -4,6 +4,12 @@ for (let i = 0; i < operationButtons.length; i++) {
     operationButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "orange");
 }
 
+const numberButtons = document.getElementsByClassName("number");
+for (let i = 0; i < numberButtons.length; i++) {
+    numberButtons[i].addEventListener("mouseenter", (e) => e.target.style.backgroundColor = "white");
+    numberButtons[i].addEventListener("mouseleave", (e) => e.target.style.backgroundColor = "lightgrey");
+}
+
 function add(a, b) {
     return a + b;
 }
