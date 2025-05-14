@@ -10,6 +10,7 @@ function evaluateExpression(expression) {
     let firstNum = "";
     let secondNum = "";
     let operand = "";
+    console.log(expression)
 
     for (let i = 0; i < expression.length; i++) {
         if (isNumeric(expression[i])) {
@@ -19,7 +20,15 @@ function evaluateExpression(expression) {
                 secondNum += expression[i];
             }
         } else if (!isNumeric(expression[i]) && operand === "") {
-            operand = expression[i];
+            if (firstNum !== "" && expression[i] === ".") {
+                firstNum += expression[i]
+            } else {
+                operand = expression[i];
+            }
+        } else if (!isNumeric(expression[i]) && operand !== "") {
+            if (secondNum !== "" && expression[i] === ".") {
+                secondNum += expression[i];
+            }
         } else {
             return "Error";
         }
