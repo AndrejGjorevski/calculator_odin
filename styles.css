@@ -24,6 +24,9 @@ body {
     margin-bottom: 15px;
     border: 1px solid gray;
     border-radius: 3%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 #buttons {
@@ -64,10 +67,22 @@ body {
     height: 60px;
     background-color: lightgrey;
     color: black;
+    cursor: pointer;
 }
 
 .number p {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
     font-size: 1.5rem;
+}
+
+#display-content {
+    text-align: right;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 5px;
+    margin-left: 0;
 }
